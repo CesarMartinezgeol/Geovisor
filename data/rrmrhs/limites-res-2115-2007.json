@@ -1,0 +1,32 @@
+{
+  "_nota": "Valores de referencia de la Resolucion 2115 de 2007 (calidad de agua para consumo humano), precargados como punto de partida para resaltar resultados fuera de rango. VERIFICAR contra el texto oficial de la resolucion antes de usarlos en un informe oficial: son editables, no una fuente legal certificada por la app.",
+  "limites": {
+    "colorAparente": { "max": 15, "unidad": "UPC" },
+    "turbidez": { "max": 2, "unidad": "NTU" },
+    "ph": { "min": 6.5, "max": 9.0, "unidad": "UN" },
+    "arsenicoTotal": { "max": 0.01, "unidad": "mg/L" },
+    "cadmioTotal": { "max": 0.003, "unidad": "mg/L" },
+    "cobreTotal": { "max": 1.0, "unidad": "mg/L" },
+    "cromoTotal": { "max": 0.05, "unidad": "mg/L" },
+    "mercurioTotal": { "max": 0.001, "unidad": "mg/L" },
+    "plomoTotal": { "max": 0.01, "unidad": "mg/L" },
+    "fluoruros": { "max": 1.0, "unidad": "mg/L" },
+    "alcalinidadTotal": { "max": 200, "unidad": "mg/L" },
+    "aluminioTotal": { "max": 0.2, "unidad": "mg/L" },
+    "calcio": { "max": 60, "unidad": "mg/L" },
+    "cloruros": { "max": 250, "unidad": "mg/L" },
+    "fenolesTotales": { "max": 0.001, "unidad": "mg/L" },
+    "durezaTotal": { "max": 300, "unidad": "mg/L" },
+    "hierroTotal": { "max": 0.3, "unidad": "mg/L" },
+    "magnesio": { "max": 36, "unidad": "mg/L" },
+    "manganesoTotal": { "max": 0.1, "unidad": "mg/L" },
+    "molibdenoTotal": { "max": 0.07, "unidad": "mg/L" },
+    "nitratos": { "max": 10, "unidad": "mg/L" },
+    "nitritos": { "max": 0.1, "unidad": "mg/L" },
+    "sulfatos": { "max": 250, "unidad": "mg/L" },
+    "solidosDisueltosTotales": { "max": 500, "unidad": "mg/L" },
+    "zincTotal": { "max": 3.0, "unidad": "mg/L" },
+    "coliformesTotales": { "max": 0, "unidad": "NMP/100mL" },
+    "eColi": { "max": 0, "unidad": "NMP/100mL" }
+  }
+}
