@@ -25,6 +25,17 @@ monitoreo.
   que la evaluación de fondo (con la skill `ct-cormacarena`) se redacte
   encima. La app no evalúa ni decide nada por sí sola — eso es juicio
   técnico caso por caso, no algo automatizable.
+- **OCR de documentos** (`/ocr`): sube un PDF (incluye expedientes
+  multipágina, sin límite práctico de tamaño de escaneo) o una imagen
+  (FUN, Auto de inicio, ficha técnica) y obtén la transcripción completa
+  en texto, con tablas y estructura conservadas, para copiar, buscar o
+  pegar donde haga falta. Usa el modelo de Claude con visión, pensado
+  para escaneos ruidosos, sellos y letra manuscrita típicos de un
+  expediente físico. El generador de CT (`/ct/nuevo`) tiene además un
+  cargador que usa el mismo OCR para autocompletar el encabezado
+  (Concepto Técnico, Auto, expediente, interesado, localización, fecha de
+  visita) a partir del FUN o el Auto de inicio escaneado — siempre
+  revisando lo que llenó antes de generar el documento.
 
 ## Cómo correrla en desarrollo
 
@@ -34,6 +45,28 @@ npm run dev
 ```
 
 Abre http://localhost:3000
+
+## Configurar el OCR (obligatorio para `/ocr` y el autocompletado de `/ct/nuevo`)
+
+El OCR usa la API de Claude (Anthropic), así que necesita una API key propia
+(distinta de cualquier suscripción de Claude Code o claude.ai):
+
+1. Crea una key en [console.anthropic.com](https://console.anthropic.com/settings/keys).
+2. En local, crea un archivo `.env.local` en la raíz del proyecto (no se
+   sube a git) con:
+
+   ```
+   ANTHROPIC_API_KEY=sk-ant-...
+   ```
+
+3. En Vercel: Project Settings → Environment Variables → agrega
+   `ANTHROPIC_API_KEY` con el mismo valor.
+
+Sin esta variable configurada, `/ocr` y el autocompletado de `/ct/nuevo`
+responden con un error explicando que falta la key; el resto de la app
+funciona igual sin ella. El modelo usado es `claude-opus-5` (configurable
+con la variable opcional `OCR_MODEL`), priorizando calidad de lectura sobre
+costo por tratarse de documentos oficiales.
 
 ## Cómo actualizar los datos de la red de monitoreo
 

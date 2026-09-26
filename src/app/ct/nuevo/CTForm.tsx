@@ -16,6 +16,36 @@ export default function CTForm() {
   const [revisoAprobo, setRevisoAprobo] = useState("");
   const [generando, setGenerando] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [extrayendo, setExtrayendo] = useState(false);
+  const [errorOcr, setErrorOcr] = useState<string | null>(null);
+  const [sugerenciaTramite, setSugerenciaTramite] = useState<string | null>(null);
+
+  async function autocompletarDesdeArchivo(archivo: File) {
+    setExtrayendo(true);
+    setErrorOcr(null);
+    setSugerenciaTramite(null);
+    try {
+      const form = new FormData();
+      form.append("archivo", archivo);
+      form.append("modo", "campos-ct");
+      const res = await fetch("/api/ocr", { method: "POST", body: form });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Error desconocido");
+      const campos = json.campos as Record<string, string | null>;
+      if (campos.conceptoTecnicoNo) setConceptoTecnicoNo(campos.conceptoTecnicoNo);
+      if (campos.autoNo) setAutoNo(campos.autoNo);
+      if (campos.expediente) setExpediente(campos.expediente);
+      if (campos.interesado) setInteresado(campos.interesado);
+      if (campos.localizacion) setLocalizacion(campos.localizacion);
+      if (campos.fechaVisita) setFechaVisita(campos.fechaVisita);
+      if (campos.asunto) setAsunto(campos.asunto);
+      if (campos.tipoTramiteSugerido) setSugerenciaTramite(campos.tipoTramiteSugerido);
+    } catch (e) {
+      setErrorOcr(e instanceof Error ? e.message : "No se pudo leer el documento.");
+    } finally {
+      setExtrayendo(false);
+    }
+  }
 
   async function generar() {
     setGenerando(true);
@@ -54,6 +84,35 @@ export default function CTForm() {
 
   return (
     <div className="space-y-5">
+      <div className="rounded-md border border-dashed border-emerald-300 bg-emerald-50 p-4">
+        <label className="mb-1 block text-sm font-medium">
+          Autocompletar desde documento (FUN / Auto de inicio)
+        </label>
+        <p className="mb-2 text-xs text-slate-600">
+          Sube el FUN o el Auto de inicio escaneado y se llenan los campos que se logren leer.
+          Revisa siempre los datos antes de generar el documento.
+        </p>
+        <input
+          type="file"
+          accept=".pdf,.png,.jpg,.jpeg,.webp"
+          disabled={extrayendo}
+          onChange={(e) => {
+            const archivo = e.target.files?.[0];
+            if (archivo) autocompletarDesdeArchivo(archivo);
+            e.target.value = "";
+          }}
+          className="block w-full text-sm"
+        />
+        {extrayendo && <p className="mt-2 text-xs text-emerald-700">Leyendo documento con OCR…</p>}
+        {errorOcr && <p className="mt-2 text-xs text-red-600">{errorOcr}</p>}
+        {sugerenciaTramite && (
+          <p className="mt-2 text-xs text-slate-600">
+            Trámite según el documento: <span className="font-medium">{sugerenciaTramite}</span> —
+            selecciónalo abajo si corresponde.
+          </p>
+        )}
+      </div>
+
       <Campo label="Tipo de trámite" ayuda="Define qué secciones lleva el CT (paso 0 de la skill ct-cormacarena).">
         <select
           value={tipoTramite}

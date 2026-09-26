@@ -41,6 +41,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <Link href="/ct" className="hover:underline">
                 Conceptos Técnicos
               </Link>
+              <Link href="/ocr" className="hover:underline">
+                OCR
+              </Link>
             </nav>
             <span className="ml-auto text-xs text-emerald-100">
               Grupo Suelo y Subsuelo · Cormacarena
