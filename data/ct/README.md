@@ -14,3 +14,10 @@ configurar).
 Este tablero es solo de seguimiento (expediente, tipo de trámite, estado,
 plazos). La evaluación técnica de fondo de cada CT se hace con la skill de
 Claude Code `ct-cormacarena`, no aquí.
+
+## Origen de los datos actuales
+
+Los 656 expedientes cargados vienen del "Plan de saneamiento, Grupo suelo y
+subsuelo 2023" (Drive del Grupo). Ver `scripts/ct/README.md` para cómo se
+generó `expedientes.json` y qué limitaciones tiene (historial de cada
+trámite guardado como texto libre en `observaciones`, no campo por campo).
