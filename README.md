@@ -18,6 +18,13 @@ monitoreo.
   resaltado automático) ya lleno con los datos del punto. Los campos
   narrativos (descripción de la visita, estado de permisos, conclusiones)
   se completan en un formulario simple antes de descargar el documento.
+- **Tablero de Conceptos Técnicos** (`/ct`): seguimiento de expedientes de
+  CT (tipo de trámite, estado, plazos). Incluye un generador
+  (`/ct/nuevo`) que arma el encabezado oficial DATOS GENERALES (plantilla
+  F.GA-39) y los títulos de sección según el tipo de trámite, listo para
+  que la evaluación de fondo (con la skill `ct-cormacarena`) se redacte
+  encima. La app no evalúa ni decide nada por sí sola — eso es juicio
+  técnico caso por caso, no algo automatizable.
 
 ## Cómo correrla en desarrollo
 
@@ -52,11 +59,15 @@ Este proyecto es un Next.js estándar, listo para desplegarse en
 4. Cada vez que se actualice el código en GitHub, Vercel vuelve a publicar
    la app sola.
 
+## Cómo actualizar el tablero de Conceptos Técnicos
+
+`data/ct/expedientes.json` empieza vacío. Para agregar o actualizar un
+expediente (nuevo caso, cambio de estado, plazo), pídeselo a Claude Code —
+ver `data/ct/README.md`.
+
 ## Próximos pasos (fase 2)
 
-- Módulo de Conceptos Técnicos (CT) para trámites de concesión de aguas
-  subterráneas ante Cormacarena.
 - Enriquecer el historial hidráulico (Q, K, T, S) por punto desde las
   fichas técnicas y expedientes históricos.
-- Edición en línea de los datos del punto (hoy se actualizan regenerando
-  `puntos.json`).
+- Edición en línea de los datos del punto y del tablero de CT (hoy se
+  actualizan regenerando los JSON de `data/`).
